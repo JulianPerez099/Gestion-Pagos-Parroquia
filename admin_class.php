@@ -204,10 +204,12 @@ Class Action {
             }
         }
         $check = $this->db->query("SELECT * FROM courses where course ='$course' ".(!empty($id) ? " and id != {$id} " : ''))->num_rows;
-        if($check > 0){
+        /*
+         if($check > 0){
             return 2;
             exit;
         }
+        */
         if(empty($id)){
             $save = $this->db->query("INSERT INTO courses set $data");
             if($save){
