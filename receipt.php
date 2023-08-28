@@ -1,7 +1,6 @@
-
-<div class="."></div><?php
+<?php
 include 'db_connect.php';
-$fees = $conn->query("SELECT ef.*,s.name as sname,s.id_no,concat(c.course,' - ',c.level) as `class` FROM student_ef_list ef inner join student s on s.id = ef.student_id inner join courses c on c.id = ef.course_id  where ef.id = {$_GET['ef_id']}");
+$fees = $conn->query("SELECT ef.*,s.name as sname,s.id_no,concat(c.course) as `class` FROM student_ef_list ef inner join student s on s.id = ef.student_id inner join courses c on c.id = ef.course_id  where ef.id = {$_GET['ef_id']}");
 foreach ($fees->fetch_array() as $k => $v) {
 	$$k = $v;
 }

@@ -1,5 +1,4 @@
-<?php global $conn;
-include('db_connect.php'); ?>
+<?php include('db_connect.php'); ?>
 <style>
 	input[type=checkbox] {
 		/* Double-sized Checkboxes */
@@ -33,9 +32,12 @@ include('db_connect.php'); ?>
 				<div class="card">
 					<div class="card-header">
 						<b>Registro de Cripta </b>
-						<span class="float:right"><a class="btn btn-primary col-sm-6 col-md-2 float-right" href="javascript:void(0)" id="new_fees">
-								<i class="fa fa-plus"></i> Cripta
-							</a></span>
+                        <span class="float-right">
+                                <a class="btn btn-primary col-md-auto col-sm-auto float-right"
+                                   href="javascript:void(0)" id="new_fees">
+                                    <i class="fa fa-plus"></i> Cripta
+                                </a>
+                            </span>
 					</div>
 					<div class="card-body">
                         <div class="table-container"> <!-- Agregado para el desplazamiento -->
@@ -48,21 +50,21 @@ include('db_connect.php'); ?>
                                         <th class="">Nombre</th>
                                         <th class="">Tarifa</th>
                                         <th class="">Pago</th>
-                                        <th class="">Balance</th>
+                                        <th class="">Adeuda</th>
                                         <th class="text-center">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                $i = 1;
-                                $fees = $conn->query("SELECT ef.*, s.name AS student_name, s.id_no
-                                FROM student_ef_list ef
-                                INNER JOIN student s ON s.id = ef.student_id
-                                ORDER BY s.name ASC;");
-                                while ($row = $fees->fetch_assoc()) :
-                                    $paid = $conn->query("SELECT sum(amount) as paid FROM payments where ef_id=" . $row['id']);
-                                    $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : '';
-                                    $balance = $row['total_fee'] - $paid;
+                                    $i = 1;
+                                    $fees = $conn->query("SELECT ef.*, s.name AS student_name, s.id_no
+                                    FROM student_ef_list ef
+                                    INNER JOIN student s ON s.id = ef.student_id
+                                    ORDER BY s.name ASC;");
+                                    while ($row = $fees->fetch_assoc()) :
+                                        $paid = $conn->query("SELECT sum(amount) as paid FROM payments where ef_id=".$row['id']);
+                                        $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : '';
+                                        $balance = $row['total_fee'] - $paid;
                                     ?>
                                     <tr>
                                         <td class="text-center"><?php echo $i++ ?></td>
@@ -73,7 +75,7 @@ include('db_connect.php'); ?>
                                             <p><?php echo $row['ef_no'] ?></p>
                                         </td>
                                         <td>
-                                            <p><?php echo ucwords($row['student_name']) ?></p> <!-- Corregido aquí -->
+                                            <p><?php echo ucwords($row['student_name']) ?></p>
                                         </td>
                                         <td class="text-right">
                                             <p><?php echo number_format($row['total_fee'], 2) ?></p>
@@ -113,10 +115,10 @@ include('db_connect.php'); ?>
 
 	img {
 		max-width: 100px;
-		max-height: :150px;
+		max-height: 150px;
 	}
     .table-container {
-        max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+        max-height: 380px; /* Ajusta la altura máxima según tus necesidades */
         overflow-y: auto;
         overflow-x: hidden;
     }
@@ -137,7 +139,6 @@ include('db_connect.php'); ?>
 	})
 	$('.edit_fees').click(function() {
 		uni_modal("Actualizar Información de la cripta", "manage_fee.php?id=" + $(this).attr('data-id'), "mid-large")
-
 	})
 	$('.delete_fees').click(function() {
 		_conf("¿Deseas eliminar esta cripta?", "delete_fees", [$(this).attr('data-id')])
@@ -157,7 +158,6 @@ include('db_connect.php'); ?>
 					setTimeout(function() {
 						location.reload()
 					}, 1500)
-
 				}
 			}
 		})

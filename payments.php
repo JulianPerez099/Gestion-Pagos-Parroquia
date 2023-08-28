@@ -11,9 +11,12 @@
 				<div class="card">
 					<div class="card-header">
 						<b>Pagos </b>
-						<span class="float:right"><a class="btn btn-primary col-md-1 col-sm-6 float-right" href="javascript:void(0)" id="new_payment">
-								<i class="fa fa-plus"></i> Pagos
-							</a></span>
+                        <span class="float-right">
+                                <a class="btn btn-primary col-md-auto col-sm-auto float-right"
+                                   href="javascript:void(0)" id="new_payment">
+                                    <i class="fa fa-plus"></i> Pagos
+                                </a>
+                            </span>
 					</div>
 					<div class="card-body">
                         <div class="table-container"> <!-- Agregado para el desplazamiento -->
@@ -95,7 +98,7 @@
 		max-height: :150px;
 	}
     .table-container {
-        max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+        max-height: 380px; /* Ajusta la altura máxima según tus necesidades */
         overflow-y: auto;
         overflow-x: hidden;
     }

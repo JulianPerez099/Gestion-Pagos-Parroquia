@@ -29,8 +29,12 @@
                 <div class="card">
                     <div class="card-header">
                         <b>Lista de años y tarifas</b>
-                        <span class="float:right"><a class="btn btn-primary col-sm-6 col-md-2 float-right"
-                                                     href="javascript:void(0)" id="new_course"><i class="fa fa-plus"></i> Año</a></span>
+                        <span class="float-right">
+                                <a class="btn btn-primary col-md-auto col-sm-auto float-right"
+                                   href="javascript:void(0)" id="new_course">
+                                    <i class="fa fa-plus"></i> Año
+                                </a>
+                            </span>
                     </div>
                     <div class="card-body">
                         <div class="table-container"> <!-- Agregado para el desplazamiento -->
@@ -95,7 +99,7 @@
     }
 
     .table-container {
-        max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+        max-height: 380px; /* Ajusta la altura máxima según tus necesidades */
         overflow-y: auto;
         overflow-x: hidden;
     }

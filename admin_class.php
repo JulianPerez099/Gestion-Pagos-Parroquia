@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 ini_set('display_errors', 1);
 Class Action {
@@ -279,7 +281,10 @@ Class Action {
 			return 1;
 		}
 	}
+    /*
     function save_fees(){
+        print_r($_POST);
+        print_r();
         extract($_POST);
         $data = "";
         foreach($_POST as $k => $v){
@@ -299,10 +304,46 @@ Class Action {
         }else{
             $save = $this->db->query("UPDATE student_ef_list SET $data WHERE id = $id");
         }
-
         if($save)
             return 1;
     }
+    */
+    function save_fees(){
+        header('Content-Type: application/json'); // Configurar el encabezado para JSON
+        $response = array(); // Crear un arreglo para almacenar la respuesta
+
+        extract($_POST);
+        $data = "";
+        foreach($_POST as $k => $v){
+            if(!in_array($k, array('id')) && !is_numeric($k)){
+                if($k == 'total_fee'){
+                    $v = str_replace(',', '', $v);
+                }
+                if(empty($data)){
+                    $data .= " $k='$v' ";
+                }else{
+                    $data .= ", $k='$v' ";
+                }
+            }
+        }
+        if(empty($id)){
+            $query = "INSERT INTO student_ef_list SET $data";
+            $response['query'] = $query; // Agregar la consulta SQL a la respuesta
+            $save = $this->db->query($query);
+        }else{
+            $query = "UPDATE student_ef_list SET $data WHERE id = $id";
+            $response['query'] = $query; // Agregar la consulta SQL a la respuesta
+            $save = $this->db->query($query);
+        }
+        if($save) {
+            $response['message'] = "Data saved successfully";
+            echo json_encode($response); // Enviar la respuesta como JSON
+        } else {
+            $response['message'] = "Error saving data";
+            echo json_encode($response); // Enviar la respuesta como JSON
+        }
+    }
+
 
     function delete_fees(){
 		extract($_POST);

@@ -26,8 +26,12 @@
                 <div class="card">
                     <div class="card-header">
                         <b>Registro de propietarios </b>
-                        <span class="float:right"><a class="btn btn-primary col-md-1 col-sm-6 float-right"
-                                                     href="javascript:void(0)" id="new_student"><i class="fa fa-plus"></i> Propietario</a></span>
+                            <span class="float-right">
+                                <a class="btn btn-primary col-md-auto col-sm-auto float-right"
+                                   href="javascript:void(0)" id="new_student">
+                                    <i class="fa fa-plus"></i> Propietario
+                                </a>
+                            </span>
                     </div>
                     <div class="card-body">
                         <div class="table-container"> <!-- Agregado para el desplazamiento -->
@@ -95,7 +99,7 @@
     }
 
     .table-container {
-        max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+        max-height: 330px; /* Ajusta la altura máxima según tus necesidades */
         overflow-y: auto;
         overflow-x: hidden;
     }
