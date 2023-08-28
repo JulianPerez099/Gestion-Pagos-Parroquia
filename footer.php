@@ -42,7 +42,7 @@
 
 <!-- Copyright -->
 <div class="text-center p-1" style="background-color: #E1B40A">
-    Desarrollado por Gestión Pagos Cripta
+Parroquia San José - Sonsón NIT:890.980.423-5
     </div>
   <!-- Copyright -->
   
