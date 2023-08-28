@@ -16,47 +16,58 @@
 			</div>
 
 			<div class="card-body">
-				<table class="table-striped table-bordered">
-					<thead>
-						<tr>
-							<th class="text-center">#</th>
-							<th class="text-center">Nombre Completo</th>
-							<th class="text-center">Usuario</th>
-							<th class="text-center">Tipo</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						include 'db_connect.php';
-						$type = array("", "Admin", "Staff", "Alumnus/Alumna");
-						$users = $conn->query("SELECT * FROM users order by name asc");
-						$i = 1;
-						while ($row = $users->fetch_assoc()) :
-						?>
-							<tr>
-								<td class="text-center">
-									<?php echo $i++ ?>
-								</td>
-								<td>
-									<?php echo ucwords($row['name']) ?>
-								</td>
+                <div class="table-container"> <!-- Agregado para el desplazamiento -->
+                    <table class="table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Nombre Completo</th>
+                                <th class="text-center">Usuario</th>
+                                <th class="text-center">Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include 'db_connect.php';
+                            $type = array("", "Admin", "Staff", "Alumnus/Alumna");
+                            $users = $conn->query("SELECT * FROM users order by name asc");
+                            $i = 1;
+                            while ($row = $users->fetch_assoc()) :
+                            ?>
+                                <tr>
+                                    <td class="text-center">
+                                        <?php echo $i++ ?>
+                                    </td>
+                                    <td>
+                                        <?php echo ucwords($row['name']) ?>
+                                    </td>
 
-								<td>
-									<?php echo $row['username'] ?>
-								</td>
-								<td>
-									<?php echo $type[$row['type']] ?>
-								</td>
-							</tr>
-						<?php endwhile; ?>
-					</tbody>
-
-				</table>
+                                    <td>
+                                        <?php echo $row['username'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $type[$row['type']] ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 		</div>
 	</div>
 
 </div>
+
+<noscript>
+    <style>
+        .table-container {
+            max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+</noscript>
 
 <script>
 	$('table').dataTable();

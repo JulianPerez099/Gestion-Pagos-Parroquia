@@ -19,10 +19,14 @@ if (isset($_GET['id'])) {
                     <label for="" class="control-label">Año</label>
                     <input type="text" class="form-control" name="course" value="<?php echo isset($course) ? $course : '' ?>" required>
                 </div>
+                
+                <!--
+                                            CODIGO PARA PONER EN LA LISTA EL PERIODO
                 <div class="form-group">
                     <label for="" class="control-label">Periodo</label>
                     <input type="text" class="form-control" name="level" value="<?php echo isset($level) ? $level : '' ?>" required>
                 </div>
+                -->
                 <div class="form-group">
                     <label for="" class="control-label">Descripción</label>
                     <textarea name="description" id="" cols="30" rows="4" class="form-control" required=""><?php echo isset($description) ? $description : '' ?></textarea>

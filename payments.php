@@ -16,64 +16,65 @@
 							</a></span>
 					</div>
 					<div class="card-body">
-						<table class="table table-condensed table-bordered table-hover">
-							<thead>
-								<tr>
-									<th class="text-center">#</th>
-									<th class="">Fecha</th>
-									<th class="">Nº Cripta</th>
-									<th class="">Nº Propietario</th>
-									<th class="">Nombre</th>
-									<th class="">Monto Pagado</th>
-									<th class="text-center">Acción</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								$i = 1;
-								$payments = $conn->query("SELECT p.*,s.name as sname, ef.ef_no,s.id_no FROM payments p inner join student_ef_list ef on ef.id = p.ef_id inner join student s on s.id = ef.student_id order by unix_timestamp(p.date_created) desc ");
-								if ($payments->num_rows > 0) :
-									while ($row = $payments->fetch_assoc()) :
-										$paid = $conn->query("SELECT sum(amount) as paid FROM payments where ef_id=" . $row['id']);
-										$paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : '';
-								?>
-										<tr>
-											<td class="text-center"><?php echo $i++ ?></td>
-											<td>
-												<p><?php echo date("M d,Y H:i A", strtotime($row['date_created'])) ?></p>
-											</td>
-											<td>
-												<p><?php echo $row['id_no'] ?></p>
-											</td>
-											<td>
-												<p><?php echo $row['ef_no'] ?></p>
-											</td>
-											<td>
-												<p><?php echo ucwords($row['sname']) ?></p>
-											</td>
-											<td class="text-right">
-												<p><?php echo number_format($row['amount'], 2) ?></p>
-											</td>
-											<td class="text-center">
-												<button class="btn btn-primary view_payment" type="button" data-id="<?php echo $row['id'] ?>" data-ef_id="<?php echo $row['ef_id'] ?>"><i class="fa fa-eye"></i></button>
-												<button class="btn btn-info edit_payment" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
-												<button class="btn btn-danger delete_payment" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
-											</td>
-										</tr>
-									<?php
-									endwhile;
-								else :
-									?>
-									<tr>
-										<th class="text-center" colspan="7">Sin datos que mostrar.</th>
-									</tr>
-								<?php
-								endif;
+                        <div class="table-container"> <!-- Agregado para el desplazamiento -->
+                            <table class="table table-condensed table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="">Fecha</th>
+                                        <th class="">Nº Cripta</th>
+                                        <th class="">Nº Propietario</th>
+                                        <th class="">Nombre</th>
+                                        <th class="">Monto Pagado</th>
+                                        <th class="text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $i = 1;
+                                    $payments = $conn->query("SELECT p.*,s.name as sname, ef.ef_no,s.id_no FROM payments p inner join student_ef_list ef on ef.id = p.ef_id inner join student s on s.id = ef.student_id order by unix_timestamp(p.date_created) desc ");
+                                    if ($payments->num_rows > 0) :
+                                        while ($row = $payments->fetch_assoc()) :
+                                            $paid = $conn->query("SELECT sum(amount) as paid FROM payments where ef_id=" . $row['id']);
+                                            $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : '';
+                                    ?>
+                                            <tr>
+                                                <td class="text-center"><?php echo $i++ ?></td>
+                                                <td>
+                                                    <p><?php echo date("M d,Y H:i A", strtotime($row['date_created'])) ?></p>
+                                                </td>
+                                                <td>
+                                                    <p><?php echo $row['id_no'] ?></p>
+                                                </td>
+                                                <td>
+                                                    <p><?php echo $row['ef_no'] ?></p>
+                                                </td>
+                                                <td>
+                                                    <p><?php echo ucwords($row['sname']) ?></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p><?php echo number_format($row['amount'], 2) ?></p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-primary view_payment" type="button" data-id="<?php echo $row['id'] ?>" data-ef_id="<?php echo $row['ef_id'] ?>"><i class="fa fa-eye"></i></button>
+                                                    <button class="btn btn-info edit_payment" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
+                                                    <button class="btn btn-danger delete_payment" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        endwhile;
+                                    else :
+                                        ?>
+                                        <tr>
+                                            <th class="text-center" colspan="7">Sin datos que mostrar.</th>
+                                        </tr>
+                                    <?php
+                                    endif;
 
-								?>
-							</tbody>
-
-						</table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -93,6 +94,11 @@
 		max-width: 100px;
 		max-height: :150px;
 	}
+    .table-container {
+        max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 </style>
 
 <script>

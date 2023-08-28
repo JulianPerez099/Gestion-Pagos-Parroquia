@@ -38,60 +38,62 @@ include('db_connect.php'); ?>
 							</a></span>
 					</div>
 					<div class="card-body">
-						<table class="table table-condensed table-bordered table-hover">
-							<thead>
-								<tr>
-									<th class="text-center">#</th>
-									<th class="">Nº Propietario</th>
-									<th class="">Nº Cripta</th>
-									<th class="">Nombre</th>
-									<th class="">Tarifa</th>
-									<th class="">Pago</th>
-									<th class="">Balance</th>
-									<th class="text-center">Acción</th>
-								</tr>
-							</thead>
-                            <tbody>
-                            <?php
-                            $i = 1;
-                            $fees = $conn->query("SELECT ef.*, s.name AS student_name, s.id_no
-							FROM student_ef_list ef
-							INNER JOIN student s ON s.id = ef.student_id
-							ORDER BY s.name ASC;");
-                            while ($row = $fees->fetch_assoc()) :
-                                $paid = $conn->query("SELECT sum(amount) as paid FROM payments where ef_id=" . $row['id']);
-                                $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : '';
-                                $balance = $row['total_fee'] - $paid;
-                                ?>
-                                <tr>
-                                    <td class="text-center"><?php echo $i++ ?></td>
-                                    <td>
-                                        <p><?php echo $row['id_no'] ?></p>
-                                    </td>
-                                    <td>
-                                        <p><?php echo $row['ef_no'] ?></p>
-                                    </td>
-                                    <td>
-                                        <p><?php echo ucwords($row['student_name']) ?></p> <!-- Corregido aquí -->
-                                    </td>
-                                    <td class="text-right">
-                                        <p><?php echo number_format($row['total_fee'], 2) ?></p>
-                                    </td>
-                                    <td class="text-right">
-                                        <p><?php echo number_format($paid, 2) ?></p>
-                                    </td>
-                                    <td class="text-right">
-                                        <p><?php echo number_format($balance, 2) ?></p>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-primary view_payment" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-eye"></i></button>
-                                        <button class="btn btn-info edit_fees" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
-                                        <button class="btn btn-danger delete_fees" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                            </tbody>
-                        </table>
+                        <div class="table-container"> <!-- Agregado para el desplazamiento -->
+                            <table class="table table-condensed table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="">Nº Propietario</th>
+                                        <th class="">Nº Cripta</th>
+                                        <th class="">Nombre</th>
+                                        <th class="">Tarifa</th>
+                                        <th class="">Pago</th>
+                                        <th class="">Balance</th>
+                                        <th class="text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $i = 1;
+                                $fees = $conn->query("SELECT ef.*, s.name AS student_name, s.id_no
+                                FROM student_ef_list ef
+                                INNER JOIN student s ON s.id = ef.student_id
+                                ORDER BY s.name ASC;");
+                                while ($row = $fees->fetch_assoc()) :
+                                    $paid = $conn->query("SELECT sum(amount) as paid FROM payments where ef_id=" . $row['id']);
+                                    $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : '';
+                                    $balance = $row['total_fee'] - $paid;
+                                    ?>
+                                    <tr>
+                                        <td class="text-center"><?php echo $i++ ?></td>
+                                        <td>
+                                            <p><?php echo $row['id_no'] ?></p>
+                                        </td>
+                                        <td>
+                                            <p><?php echo $row['ef_no'] ?></p>
+                                        </td>
+                                        <td>
+                                            <p><?php echo ucwords($row['student_name']) ?></p> <!-- Corregido aquí -->
+                                        </td>
+                                        <td class="text-right">
+                                            <p><?php echo number_format($row['total_fee'], 2) ?></p>
+                                        </td>
+                                        <td class="text-right">
+                                            <p><?php echo number_format($paid, 2) ?></p>
+                                        </td>
+                                        <td class="text-right">
+                                            <p><?php echo number_format($balance, 2) ?></p>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-primary view_payment" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-eye"></i></button>
+                                            <button class="btn btn-info edit_fees" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
+                                            <button class="btn btn-danger delete_fees" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -113,6 +115,11 @@ include('db_connect.php'); ?>
 		max-width: 100px;
 		max-height: :150px;
 	}
+    .table-container {
+        max-height: 450px; /* Ajusta la altura máxima según tus necesidades */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 </style>
 
 <script>

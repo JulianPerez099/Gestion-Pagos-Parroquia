@@ -189,57 +189,57 @@ Class Action {
 			return 1;
 				}
 	}
-	function save_course(){
-		extract($_POST);
-		$data = "";
-		foreach($_POST as $k => $v){
-			if(!in_array($k, array('id','fid','type','amount')) && !is_numeric($k)){
-				if(empty($data)){
-					$data .= " $k='$v' ";
-				}else{
-					$data .= ", $k='$v' ";
-				}
-			}
-		}
-		$check = $this->db->query("SELECT * FROM courses where course ='$course' and level ='$level' ".(!empty($id) ? " and id != {$id} " : ''))->num_rows;
-		if($check > 0){
-			return 2;
-			exit;
-		}
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO courses set $data");
-			if($save){
-				$id = $this->db->insert_id;
-				foreach($fid as $k =>$v){
-					$data = " course_id = '$id' ";
-					$data .= ", description = '{$type[$k]}' ";
-					$data .= ", amount = '{$amount[$k]}' ";
-					$save2[] = $this->db->query("INSERT INTO fees set $data");
-				}
-				if(isset($save2))
-						return 1;
-			}
-		}else{
-			$save = $this->db->query("UPDATE courses set $data where id = $id");
-			if($save){
-				$this->db->query("DELETE FROM fees where course_id = $id and id not in (".implode(',',$fid).") ");
-				foreach($fid as $k =>$v){
-					$data = " course_id = '$id' ";
-					$data .= ", description = '{$type[$k]}' ";
-					$data .= ", amount = '{$amount[$k]}' ";
-					if(empty($v)){
-						$save2[] = $this->db->query("INSERT INTO fees set $data");
-					}else{
-						$save2[] = $this->db->query("UPDATE fees set $data where id = $v");
-					}
-				}
-				if(isset($save2))
-						return 1;
-			}
-		}
+    function save_course(){
+        extract($_POST);
+        $data = "";
+        foreach($_POST as $k => $v){
+            if(!in_array($k, array('id','fid','type','amount')) && !is_numeric($k)){
+                if(empty($data)){
+                    $data .= " $k='$v' ";
+                }else{
+                    $data .= ", $k='$v' ";
+                }
+            }
+        }
+        $check = $this->db->query("SELECT * FROM courses where course ='$course' ".(!empty($id) ? " and id != {$id} " : ''))->num_rows;
+        if($check > 0){
+            return 2;
+            exit;
+        }
+        if(empty($id)){
+            $save = $this->db->query("INSERT INTO courses set $data");
+            if($save){
+                $id = $this->db->insert_id;
+                foreach($fid as $k =>$v){
+                    $data = " course_id = '$id' ";
+                    $data .= ", description = '{$type[$k]}' ";
+                    $data .= ", amount = '{$amount[$k]}' ";
+                    $save2[] = $this->db->query("INSERT INTO fees set $data");
+                }
+                if(isset($save2))
+                    return 1;
+            }
+        }else{
+            $save = $this->db->query("UPDATE courses set $data where id = $id");
+            if($save){
+                $this->db->query("DELETE FROM fees where course_id = $id and id not in (".implode(',',$fid).") ");
+                foreach($fid as $k =>$v){
+                    $data = " course_id = '$id' ";
+                    $data .= ", description = '{$type[$k]}' ";
+                    $data .= ", amount = '{$amount[$k]}' ";
+                    if(empty($v)){
+                        $save2[] = $this->db->query("INSERT INTO fees set $data");
+                    }else{
+                        $save2[] = $this->db->query("UPDATE fees set $data where id = $v");
+                    }
+                }
+                if(isset($save2))
+                    return 1;
+            }
+        }
+    }
 
-	}
-	function delete_course(){
+    function delete_course(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM courses where id = ".$id);
 		$delete2 = $this->db->query("DELETE FROM fees where course_id = ".$id);
