@@ -48,10 +48,10 @@
                                         <th class="">Nº Propietario</th>
                                         <th class="">Nº Cripta</th>
                                         <th class="">Nombre</th>
-                                        <th class="">Tarifa</th>
                                         <th class="">Pago</th>
+                                        <th class="">Abon&oacute;</th>
                                         <th class="">Adeuda</th>
-                                        <th class="text-center">Acción</th>
+                                        <th class="text-center">Acci&oacute;n</th>
                                     </tr>
                                 </thead>
                                 <tbody>
