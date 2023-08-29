@@ -10,7 +10,7 @@ Class Action {
         global $conn;
         ob_start();
    	include 'db_connect.php';
-    
+
     $this->db = $conn;
 	}
 	function __destruct() {
@@ -19,7 +19,7 @@ Class Action {
 	}
 
 	function login(){
-		extract($_POST);		
+		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
@@ -32,8 +32,8 @@ Class Action {
 		}
 	}
 	function login2(){
-		
-		extract($_POST);		
+
+		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM complainants where email = '".$email."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
@@ -84,12 +84,7 @@ Class Action {
 			return 1;
 		}
 	}
-	function delete_user(){
-		extract($_POST);
-		$delete = $this->db->query("DELETE FROM users where id = ".$id);
-		if($delete)
-			return 1;
-	}
+
 	function signup(){
 		extract($_POST);
 		$data = " name = '$name' ";
@@ -173,7 +168,7 @@ Class Action {
 					$data .= ", cover_img = '$fname' ";
 
 		}
-		
+
 		// echo "INSERT INTO system_settings set ".$data;
 		$chk = $this->db->query("SELECT * FROM system_settings");
 		if($chk->num_rows > 0){

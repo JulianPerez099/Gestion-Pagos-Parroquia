@@ -138,10 +138,20 @@
 
 	})
 	$('.edit_fees').click(function() {
-		uni_modal("Actualizar Información de la cripta", "manage_fee.php?id=" + $(this).attr('data-id'), "mid-large")
+        var userType = <?php echo $_SESSION['login_type']; ?>; // Obtener el tipo de usuario de la sesión
+        if (userType == 2 || userType == 3) {
+            __conf("Permisos Insuficientes"); // Mostrar mensaje de error
+        } else {
+            uni_modal("Actualizar Información de la cripta", "manage_fee.php?id=" + $(this).attr('data-id'), "mid-large")
+        }
 	})
 	$('.delete_fees').click(function() {
-		_conf("¿Deseas eliminar esta cripta?", "delete_fees", [$(this).attr('data-id')])
+        var userType = <?php echo $_SESSION['login_type']; ?>; // Obtener el tipo de usuario de la sesión
+        if (userType == 2 || userType == 3) {
+            __conf("Permisos Insuficientes"); // Mostrar mensaje de error
+        } else {
+            _conf("¿Deseas eliminar esta cripta?", "delete_fees", [$(this).attr('data-id')])
+        }
 	})
 
 	function delete_fees($id) {

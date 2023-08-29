@@ -119,11 +119,20 @@
 
 	})
 	$('.edit_payment').click(function() {
-		uni_modal("Actualizar Pago", "manage_payment.php?id=" + $(this).attr('data-id'), "mid-large")
-
+        var userType = <?php echo $_SESSION['login_type']; ?>; // Obtener el tipo de usuario de la sesión
+        if (userType == 2 || userType == 3) {
+            __conf("Permisos Insuficientes"); // Mostrar mensaje de error
+        } else {
+            uni_modal("Actualizar Pago", "manage_payment.php?id=" + $(this).attr('data-id'), "mid-large")
+        }
 	})
 	$('.delete_payment').click(function() {
-		_conf("¿Deseas eliminar este pago?", "delete_payment", [$(this).attr('data-id')])
+        var userType = <?php echo $_SESSION['login_type']; ?>; // Obtener el tipo de usuario de la sesión
+        if (userType == 2 || userType == 3) {
+            __conf("Permisos Insuficientes"); // Mostrar mensaje de error
+        } else {
+            _conf("¿Deseas eliminar este pago?", "delete_payment", [$(this).attr('data-id')])
+        }
 	})
 
 	function delete_payment($id) {

@@ -115,11 +115,21 @@
     });
 
     $('.edit_student').click(function () {
-        uni_modal("Actualizar Información del Propietario", "manage_student.php?id=" + $(this).attr('data-id'), "mid-large");
+        var userType = <?php echo $_SESSION['login_type']; ?>; // Obtener el tipo de usuario de la sesión
+        if (userType == 2 || userType == 3) {
+            __conf("Permisos Insuficientes"); // Mostrar mensaje de error
+        } else {
+            uni_modal("Actualizar Información del Propietario", "manage_student.php?id=" + $(this).attr('data-id'), "mid-large");
+        }
     });
 
     $('.delete_student').click(function () {
-        _conf("Deseas eliminar este propietario? ", "delete_student", [$(this).attr('data-id')]);
+        var userType = <?php echo $_SESSION['login_type']; ?>; // Obtener el tipo de usuario de la sesión
+        if (userType == 2 || userType == 3) {
+            __conf("Permisos Insuficientes"); // Mostrar mensaje de error
+        } else {
+            _conf("Deseas eliminar este propietario? ", "delete_student", [$(this).attr('data-id')]);
+        }
     });
 
     function delete_student($id) {

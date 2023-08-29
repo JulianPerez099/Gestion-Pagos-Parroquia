@@ -178,6 +178,13 @@
       }
     })
   }
+  window.__conf = function($msg = '', $func = '', $params = []) {
+      $('#confirm_modal #confirm').hide(); // Oculta el botón de confirmar
+      $('#confirm_modal #close').text('Cerrar'); // Cambia el texto del botón de confirmar a "Cerrar"
+      $('#confirm_modal .modal-body').html('<p style="text-align:center; font-size: 18px; font-weight: bold;">' + $msg + '</p>');
+      $('#confirm_modal').modal('show');
+  }
+
   window._conf = function($msg = '', $func = '', $params = []) {
     $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
     $('#confirm_modal .modal-body').html($msg)
